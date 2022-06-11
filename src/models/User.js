@@ -1,18 +1,18 @@
 const mongoose = require ('mongoose')
-const {schema} = mongoose.Aggregate
-const bcrypt = require ('bcrypt')
+const {Schema} = mongoose
+const bcrypt = require ('bcryptjs')
 
- const UserSchema = new Schema({
-    name: {type: string, require: true},
-    email: {type: string, require: true},
-    password: {type: string, require: true},
+const UserSchema = new Schema({
+    name: {type: String, require: true},
+    email: {type: String, require: true},
+    password: {type: String, require: true},
     date: {type: Date, default: Date.now},
 })
 
 UserSchema.methods.encryptPassword = async (password) =>{
-    const salt = await abcrypt.getSalt(10);
-    const encryptPassword = bcrypt.hash(password, salt)
-    return encryptPassword
+    const salt = await bcrypt.genSaltSync(10);
+    const hashedPassword = await bcrypt.hashSync(password, salt)
+    return hashedPassword
 }
 
 UserSchema.methods.matchPassword = async function (password) {

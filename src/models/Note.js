@@ -7,6 +7,7 @@ const NoteSchema = new Schema({
     category: {type: 'string', required: true},
     date: {type: Date, default: Date.now()},
     completed: {type: Boolean, default: false},
+    user:{type: String}
 })
 
 module.exports = mongoose.model("Note", NoteSchema)

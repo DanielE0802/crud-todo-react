@@ -10,10 +10,9 @@ router.get('/notes', async (req, res) => {
             data: allNotes
         })
     } catch (e) {
-        console.log(e)
         res.status(400).json({
             status_code: 400,
-            error: e.message
+            error: error.message
         })
     }
 })
@@ -22,14 +21,14 @@ router.post('/notes/add', async (req, res) => {
     try {
         const { title, description, category, id } = req.body;
         const newNote = new Note({ title, description, category, id })
+        newNote.user = req.user.id;
         await newNote.save()
         res.status(200).json("Success");
         console.log(newNote)
     } catch (error) {
-        console.log(e)
         res.status(400).json({
             status_code: 400,
-            error: e.message
+            error: error.message
         })
     }
 });
